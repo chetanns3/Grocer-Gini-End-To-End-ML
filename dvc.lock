@@ -46,8 +46,8 @@ stages:
       size: 190
     - path: src/modeling/train.py
       hash: md5
-      md5: 47c7cd66c9c9167f8597411908c2cced
-      size: 2976
+      md5: 578b0b2b2304e5b32660ef0097d2a599
+      size: 3215
     params:
       params.yaml:
         train.colsample_bytree: 0.8
@@ -65,6 +65,6 @@ stages:
       size: 93
     - path: models/
       hash: md5
-      md5: b800812ed67fa3f3bee886e19cb85737.dir
-      size: 680345
-      nfiles: 1
+      md5: 2d68ef0354849f6f47ec85ed653bb68e.dir
+      size: 680963
+      nfiles: 2

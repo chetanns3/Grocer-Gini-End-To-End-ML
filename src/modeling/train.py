@@ -95,6 +95,10 @@ def main():
     save_model(model, home_dir / "models")
     save_metrics(metrics, home_dir)
 
-
+    # ✅ Save feature names for inference
+    feature_names_path = home_dir / "models" / "feature_names.pkl"
+    joblib.dump(X_train.columns.tolist(), feature_names_path)
+    print(f"✅ Feature names saved at: {feature_names_path}")
+    
 if __name__ == "__main__":
     main()
