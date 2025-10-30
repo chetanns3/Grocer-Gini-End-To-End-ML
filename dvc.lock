@@ -1,0 +1,23 @@
+schema: '2.0'
+stages:
+  dataset:
+    cmd: python src/dataset.py data/raw/Train.csv
+    deps:
+    - path: data/raw/Train.csv
+      hash: md5
+      md5: e0df0a56f3f03c084c828b29aaa0f314
+      size: 861013
+    - path: src/dataset.py
+      hash: md5
+      md5: bf8fa9e73f06a3ead66374bdc9f7953a
+      size: 5460
+    params:
+      params.yaml:
+        dataset.seed: 42
+        dataset.test_split: 0.2
+    outs:
+    - path: data/interim/
+      hash: md5
+      md5: 5c9880800e1755d2adf30b9f66f3a9a6.dir
+      size: 1138530
+      nfiles: 2

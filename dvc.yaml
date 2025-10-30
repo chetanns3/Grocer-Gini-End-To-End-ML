@@ -1,0 +1,29 @@
+stages:
+  dataset:
+    cmd: python src/dataset.py data/raw/Train.csv
+    deps:
+      - data/raw/Train.csv
+      - src/dataset.py
+    params:
+      - dataset.test_split
+      - dataset.seed
+    outs:
+      - data/interim/
+
+  train:
+    cmd: python src/modeling/train.py data/interim/train.csv data/interim/test.csv
+    deps:
+      - data/interim/train.csv
+      - data/interim/test.csv
+      - src/modeling/train.py
+    params:
+      - train.n_estimators
+      - train.learning_rate
+      - train.max_depth
+      - train.subsample
+      - train.colsample_bytree
+      - train.seed
+      - train.reg_lambda
+      - train.reg_alpha
+    outs:
+      - models/
