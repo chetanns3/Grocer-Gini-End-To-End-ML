@@ -4,11 +4,13 @@ stages:
     deps:
       - data/raw/Train.csv
       - src/dataset.py
+      - params.yaml
     params:
       - dataset.test_split
       - dataset.seed
     outs:
-      - data/interim/
+      - data/interim/train.csv
+      - data/interim/test.csv
 
   train:
     cmd: python src/modeling/train.py data/interim/train.csv data/interim/test.csv
@@ -16,6 +18,7 @@ stages:
       - data/interim/train.csv
       - data/interim/test.csv
       - src/modeling/train.py
+      - params.yaml
     params:
       - train.n_estimators
       - train.learning_rate
@@ -27,3 +30,5 @@ stages:
       - train.reg_alpha
     outs:
       - models/
+    metrics:
+      - metrics.json

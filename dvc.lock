@@ -7,6 +7,10 @@ stages:
       hash: md5
       md5: e0df0a56f3f03c084c828b29aaa0f314
       size: 861013
+    - path: params.yaml
+      hash: md5
+      md5: 961050bc2f4c75b9894f44ebc5cc8600
+      size: 189
     - path: src/dataset.py
       hash: md5
       md5: bf8fa9e73f06a3ead66374bdc9f7953a
@@ -16,8 +20,51 @@ stages:
         dataset.seed: 42
         dataset.test_split: 0.2
     outs:
-    - path: data/interim/
+    - path: data/interim/test.csv
       hash: md5
-      md5: 5c9880800e1755d2adf30b9f66f3a9a6.dir
-      size: 1138530
-      nfiles: 2
+      md5: 143bb55276fd4574113c338d39cd42d3
+      size: 228060
+    - path: data/interim/train.csv
+      hash: md5
+      md5: b479441cc4367e3ec07ac039b542bbfb
+      size: 910470
+  train:
+    cmd: python src/modeling/train.py data/interim/train.csv 
+      data/interim/test.csv
+    deps:
+    - path: data/interim/test.csv
+      hash: md5
+      md5: 143bb55276fd4574113c338d39cd42d3
+      size: 228060
+    - path: data/interim/train.csv
+      hash: md5
+      md5: b479441cc4367e3ec07ac039b542bbfb
+      size: 910470
+    - path: params.yaml
+      hash: md5
+      md5: 961050bc2f4c75b9894f44ebc5cc8600
+      size: 189
+    - path: src/modeling/train.py
+      hash: md5
+      md5: 47c7cd66c9c9167f8597411908c2cced
+      size: 2976
+    params:
+      params.yaml:
+        train.colsample_bytree: 0.8
+        train.learning_rate: 0.1
+        train.max_depth: 6
+        train.n_estimators: 300
+        train.reg_alpha: 0.0
+        train.reg_lambda: 1.0
+        train.seed: 42
+        train.subsample: 0.8
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 0f1b65134ba0170af5216f6a8c2c1924
+      size: 93
+    - path: models/
+      hash: md5
+      md5: 18c8b5f838decba09b8444452c99557d.dir
+      size: 1288170
+      nfiles: 1

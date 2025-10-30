@@ -5,6 +5,8 @@ import numpy as np
 import joblib
 from xgboost import XGBRegressor
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+import json
+import os
 
 
 def load_data(train_path, test_path):
@@ -44,7 +46,7 @@ def evaluate_model(model, X_test, y_test):
     r2 = r2_score(y_test, preds)
     rmse = np.sqrt(mean_squared_error(y_test, preds))
     mae = mean_absolute_error(y_test, preds)
-    return {"R2": r2, "RMSE": rmse, "MAE": mae}
+    return {"r2": r2, "rmse": rmse, "mae": mae}
 
 
 def save_model(model, output_path):
@@ -53,6 +55,14 @@ def save_model(model, output_path):
     model_path = f"{output_path}/xgb_model.pkl"
     joblib.dump(model, model_path)
     print(f"✅ Model saved at: {model_path}")
+
+
+def save_metrics(metrics, output_path):
+    """Save evaluation metrics to JSON file"""
+    metrics_path = os.path.join(output_path, "metrics.json")
+    with open(metrics_path, "w") as f:
+        json.dump(metrics, f, indent=4)
+    print(f"📈 Metrics saved at: {metrics_path}")
 
 
 def main():
@@ -79,10 +89,11 @@ def main():
     metrics = evaluate_model(model, X_test, y_test)
     print("📊 Model Performance:")
     for k, v in metrics.items():
-        print(f"{k}: {v:.4f}")
+        print(f"{k.upper()}: {v:.4f}")
 
-    # Save model
+    # Save model and metrics
     save_model(model, home_dir / "models")
+    save_metrics(metrics, home_dir)
 
 
 if __name__ == "__main__":
